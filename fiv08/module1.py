@@ -31,9 +31,9 @@ def main():
     # exo5()
 # ==============================================================
 def exo1():
-    Va = f(0.)
+    Va = df(0.)
     Vb = f(3.)
-    x, y = edo.DFC2_GT(samia, 0., 3., Va, Vb, 60, True, True)
+    x, y = edo.DFC2_GT(samia, 0., 3., Va, Vb, 60, False, True)
     graphe.FixeEchelle(-0.1, 3.1, -0.1, 0.5)
     graphe.TraceAxes()
     graphe.TraceFonc(f, 0., 3., epaisseur=3.)
@@ -84,6 +84,9 @@ def idris(x):
 # ==============================================================
 def f(x):
     return x*exp(-x)
+# ==============================================================
+def df(x):
+    return (1 - x)*exp(-x)
 # ==============================================================
 def h(x): # Une solution de y'' = 2y'/(2x+1) - (2x+1)²y
           # y(0) = 0 ; y(2*pi) = -0.2070018496552964

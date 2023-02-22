@@ -7,4 +7,6 @@ TP VIB/
 # Redundant files
 lehtihet\ bib\ vb
 # Build & Temp files
+*.pyc
 .spyproject/
+__pycache__/
