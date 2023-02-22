@@ -1,4 +1,10 @@
+# Compressed files used for archiving
 *.zip
-"./Exemple\ Flexion/"
-./TP/
-./TP VIB/
+# Personal examples and testing modules
+Exemple\ Flexion/
+TP/
+TP VIB/
+# Redundant files
+lehtihet\ bib\ vb
+# Build & Temp files
+.spyproject/
