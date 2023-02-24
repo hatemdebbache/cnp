@@ -147,4 +147,165 @@ def PointMilieu1(f, a, b, ya, Nsub, m):
     return 2*m*Nsub, t, y
 # ==========================================================================
 # ==========================================================================
+
+# METHODES For 1st Ord ODE. IMPLEMENTED BY HATEM
 # ==========================================================================
+#
+#                           O(h²)
+#
+# ==========================================================================
+def LeapFrog(f, to, t1, tn, yo, y1, Nsub, m): # Not working
+    H = (tn - to)/Nsub
+    h = H/m; h2 = 2*h
+    
+    t = np.zeros(Nsub+1)
+    y = np.zeros(Nsub+1)
+    
+    t[0] = to ; y[0] = yo
+    t[1] = t1 ; y[1] = y1
+    
+    vo = y[0] ; v1 = y[1]
+    for k in range(1, Nsub):
+        u = t[k]
+        for i in range(0,m):
+            v = vo + h2*f(u, v1)
+            vo = v1 ; v1 = v
+            u = u + h
+        
+        t[k+1] = to + (k+1)*H
+        y[k+1] = v
+
+    return m*Nsub, t, y
+# ==========================================================================
+def Adams_Bashfort2(f, to, t1, tn, yo, y1):
+    h = t1 - to ; h2 = 0.5*h
+    t, y = [to, t1], [yo, y1]
+    i = 1
+    while(t[-1] < tn):
+        k1 = f(t[i],y[i])
+        k2 = f(t[i-1],y[i-1])
+        t.append(to + (i+1)*h)
+        y.append(y[i] + h2*(3.*k1 - k2))
+        i += 1
+    
+    return 2*(i-1), np.array(t), np.array(y)
+# ==========================================================================
+def Euler_Mod(f, a, b, ya, Nsub, m):
+    H = (b - a)/Nsub
+    h = H/m ; h2 = 0.5*h
+    
+    t = np.zeros(Nsub+1)
+    y = np.zeros(Nsub+1)
+    
+    t[0] = a ; y[0] = ya
+    v = ya
+    for k in range(0,Nsub):
+        u = t[k]
+        for i in range(0,m):
+            Po = f(u, v)
+            P1 = f(u + h2, v + h2*Po)
+            v = v + h*P1
+            u = u + h
+        t[k+1] = a + (k+1)*H
+        y[k+1] = v
+    
+    return 2*m*Nsub, t, y
+# ==========================================================================
+#
+#                           Ordre 3
+#
+# ==========================================================================
+def Adams_Bashfort3(f, to, t1, t2, tn, yo, y1, y2):
+    h = t1 - to ; h12 = h/12
+    t, y = [to, t1, t1], [yo, y1, y2]
+    i = 2
+    while(t[-1] < tn):
+        k1 = f(t[i],y[i])
+        k2 = f(t[i-1],y[i-1])
+        k3 = f(t[i-2],y[i-2])
+        t.append(to + (i+1)*h)
+        y.append(y[i] + h12*(23.*k1 - 16.*k2 + 5.*k3))
+        i += 1
+    
+    return 3*(i-2), np.array(t), np.array(y)
+# ==========================================================================
+#
+#                           Ordre 4
+#
+# ==========================================================================
+def RungeKutta(f, a, b, ya, Nsub, m):
+    H = (b - a)/Nsub
+    h = H/m ; h2 = 0.5*h; h6 = h/6
+    
+    t = np.zeros(Nsub+1)
+    y = np.zeros(Nsub+1)
+    
+    t[0] = a ; y[0] = ya
+    v = ya
+    for k in range(0,Nsub):
+        u = t[k]
+        for i in range(0,m):
+            Po = f(u, v)
+            P1 = f(u + h2, v + h2*Po)
+            P2 = f(u + h2, v + h*P1)
+            P3 = f(u + h, v + h*P2)
+            v = v + h6*(Po + 2*P1 + 2*P2 + P3)
+            u = u + h
+        t[k+1] = a + (k+1)*H
+        y[k+1] = v
+    
+    return 2*m*Nsub, t, y
+# ==========================================================================
+if __name__ == "__main__":
+    import matplotlib.pyplot as plt
+    
+    def simple(t, y):
+        return -4*y + np.exp(-4*t)
+    def sol(t):
+        return t*np.exp(-4*t)
+    # Setting environment
+    plt.clf()
+    a, b = 0., 5.
+    num = 200
+    m = 2
+    # Analytic solution
+    t = np.linspace(a, b, m*num*10)
+    y = sol(t)
+    plt.plot(t, y, color='blue', label = 'Analytic')
+    
+    # Euler1 solution
+    c, t, y = Euler1(simple, a, b, sol(a), num, m)
+    plt.scatter(t, y, color='red', label='Euler-1', lw = 2.)
+    
+    # Heun1 solution
+    c, t, y = Heun1(simple, a, b, sol(a), num, m)
+    plt.scatter(t, y, color='orange', label='Heun-1', lw = 2.)
+    
+    # PM solution
+    c, t, y = PointMilieu1(simple, a, b, sol(a), num, m)
+    plt.scatter(t, y, color='yellow', label='PM', lw = 2.)
+    
+    # Euler_Mod solution
+    c, t, y = Euler_Mod(simple, a, b, sol(a), num, m)
+    plt.scatter(t, y, color='green', label='Euler_Mod', lw = 2.)
+    
+    # RungeKutta solution
+    c, t, y = RungeKutta(simple, a, b, sol(a), num, m)
+    plt.scatter(t, y, color='black', label='RungeKutta', lw = 2.)
+    
+    # METHODS WITH MORE THAN INITIAL VALUE "multistep"
+    h = (b - a)/(m*num)
+    # LeapFrog solution
+    # c, t, y = LeapFrog(simple, a, a+h, b, sol(a), sol(a+h), num-1, 1)
+    # plt.scatter(t, y, color='green', label='LeapFrog', lw = 2.)
+    
+    # Adams_Bashfort2 solution
+    c, t, y = Adams_Bashfort2(simple, a, a+h, b, sol(a), sol(a+h))
+    plt.scatter(t, y, color='pink', label='AdamsBashfort-2', lw = 2.)
+    
+    # Adams_Bashfort2 solution
+    c, t, y = Adams_Bashfort3(simple, a, a+h, a+2.*h, b, sol(a), sol(a+h), sol(a+2.*h))
+    plt.scatter(t, y, color='magenta', label='AdamsBashfort-3', lw = 2.)
+    
+    plt.legend(fontsize=16.)
+    plt.show()
