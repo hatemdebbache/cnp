@@ -154,29 +154,6 @@ def PointMilieu1(f, a, b, ya, Nsub, m):
 #                           O(h²)
 #
 # ==========================================================================
-def LeapFrog(f, to, t1, tn, yo, y1, Nsub, m): # Not working
-    H = (tn - to)/Nsub
-    h = H/m; h2 = 2*h
-    
-    t = np.zeros(Nsub+1)
-    y = np.zeros(Nsub+1)
-    
-    t[0] = to ; y[0] = yo
-    t[1] = t1 ; y[1] = y1
-    
-    vo = y[0] ; v1 = y[1]
-    for k in range(1, Nsub):
-        u = t[k]
-        for i in range(0,m):
-            v = vo + h2*f(u, v1)
-            vo = v1 ; v1 = v
-            u = u + h
-        
-        t[k+1] = to + (k+1)*H
-        y[k+1] = v
-
-    return m*Nsub, t, y
-# ==========================================================================
 def Adams_Bashfort2(f, to, t1, tn, yo, y1):
     h = t1 - to ; h2 = 0.5*h
     t, y = [to, t1], [yo, y1]
@@ -212,7 +189,7 @@ def Euler_Mod(f, a, b, ya, Nsub, m):
     return 2*m*Nsub, t, y
 # ==========================================================================
 #
-#                           Ordre 3
+#                           O(h^3)
 #
 # ==========================================================================
 def Adams_Bashfort3(f, to, t1, t2, tn, yo, y1, y2):
@@ -230,7 +207,7 @@ def Adams_Bashfort3(f, to, t1, t2, tn, yo, y1, y2):
     return 3*(i-2), np.array(t), np.array(y)
 # ==========================================================================
 #
-#                           Ordre 4
+#                           O(h^4)
 #
 # ==========================================================================
 def RungeKutta(f, a, b, ya, Nsub, m):
@@ -295,9 +272,6 @@ if __name__ == "__main__":
     
     # METHODS WITH MORE THAN INITIAL VALUE "multistep"
     h = (b - a)/(m*num)
-    # LeapFrog solution
-    # c, t, y = LeapFrog(simple, a, a+h, b, sol(a), sol(a+h), num-1, 1)
-    # plt.scatter(t, y, color='green', label='LeapFrog', lw = 2.)
     
     # Adams_Bashfort2 solution
     c, t, y = Adams_Bashfort2(simple, a, a+h, b, sol(a), sol(a+h))
