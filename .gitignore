@@ -1,11 +1,11 @@
 # Compressed files used for archiving
 *.zip
 # Personal examples and testing modules
-"Exemple Flexion/"
-"TP/"
-"TP VIB/"
+Exemple Flexion/
+TP/
+TP VIB/
 # Redundant files
-"lehtihet bib vb/"
+lehtihet bib vb/
 # Build & Temp files
 <<<<<<< HEAD
 *.pyc
