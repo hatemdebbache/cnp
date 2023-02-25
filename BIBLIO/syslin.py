@@ -611,9 +611,3 @@ def check_ndarray(*args, silent=True):
         ret.append(A)
     return ret[0] if (len(ret) <= 1) else tuple(ret)
 # ==============================================================
-if __name__ == "__main__":
-    A = [[1,0,1], [1,2,3], [2,4,6]]
-    
-    b = [-1,0,0]
-    
-    print(np.linalg.lstsq(A, b))
