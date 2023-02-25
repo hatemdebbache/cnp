@@ -231,7 +231,7 @@ def RungeKutta(f, a, b, ya, Nsub, m):
         t[k+1] = a + (k+1)*H
         y[k+1] = v
     
-    return 2*m*Nsub, t, y
+    return 4*m*Nsub, t, y
 # ==========================================================================
 if __name__ == "__main__":
     import matplotlib.pyplot as plt
