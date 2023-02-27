@@ -212,7 +212,116 @@ def Heun2(f, a, b, ya, za, Nsub, m): # Ord 2
         z[k+1] = w
     return 2*m*Nsub, t, y, z
 # ==========================================================================
+def RungeKutta2(f, a, b, ya, za, Nsub, m): # Ord 4
+    H = (b - a)/Nsub ; h = H/m ; h2 = 0.5*h; h6 = h/6
+    t = np.zeros(Nsub+1)
+    y = np.zeros(Nsub+1)
+    z = np.zeros(Nsub+1)
+    t[0] = a ; y[0] = ya ; z[0] = za
+    v = ya ; w = za
+    for k in range(0,Nsub):
+        u = t[k]
+        for i in range(0,m):
+            Po, Qo = f(u, v, w)
+            Pm1, Qm1 = f(u + h2, v + h2*Po, w + h2*Qo)
+            Pm2, Qm2 = f(u + h2, v + h2*Pm1, w + h2*Qm1)
+            P, Q = f(u + h, v + h*Pm2, w + h*Qm2)
+            v = v + h6*(Po + 2.*(Pm1 + Pm2) + P)
+            w = w + h6*(Qo + 2.*(Qm1 + Qm2) + Q)
+            u = u + h
+        t[k+1] = a + (k+1)*H
+        y[k+1] = v
+        z[k+1] = w
+        
+    return 4*m*Nsub, t, y
+# ==========================================================================
 
+"""
+        Problème de CAUCHY ORD = n
+        yn = f(t, yn)
+
+"""
+# ==========================================================================
+def Eulern(f, a, b, ya, n, Nsub, m): # Ord 1
+    # n : nb d'inconnues (ordre de l'edo)    
+    # Nsub : int : graphique
+    # m : int : nb de subdivision entre deux pas graph.
+    H = (b - a)/Nsub ; h = H/m
+    t = np.zeros(n,Nsub+1)
+    y = np.zeros((n,Nsub+1))
+    t[0] = a ; y[:,0] = ya
+    v = ya
+    for k in range(0,Nsub):
+        u = t[k]
+        for i in range(0,m):
+            Po = f(u, v)
+            v = v + h*Po
+            u = u + h
+        t[k+1] = a + (k+1)*H
+        y[:,k+1] = v
+    
+    return m*Nsub, t, y
+# ==========================================================================
+def Heunn(f, a, b, ya, n, Nsub, m): # Ord 2
+    # Nsub : int : graphique
+    # m : int : nb de subdivision entre deux pas graph
+    H = (b - a)/Nsub ; h = H/m ; h2 = 0.5*h
+    t = np.zeros(Nsub+1)
+    y = np.zeros((n,Nsub+1))
+    t[0] = a ; y[;,0] = ya
+    v = ya
+    for k in range(0,Nsub):
+        u = t[k]
+        for i in range(0,m):
+            Po = f(u, v)
+            P = f(u + h, v + h*Po)
+            v = v + h2*(Po + P)
+            u = u + h
+        t[k+1] = a + (k+1)*H
+        y[:,k+1] = v
+    
+    return 2*m*Nsub, t, y
+# ==========================================================================
+def PointMilieun(f, a, b, ya, n, Nsub, m): # Ord 2
+    # Nsub : int : graphique
+    # m : int : nb de subdivision entre deux pas graph
+    H = (b - a)/Nsub ; h = H/m ; h2 = 0.5*h
+    t = np.zeros(Nsub+1)
+    y = np.zeros((n,Nsub+1))
+    t[0] = a ; y[:,0] = ya
+    v = ya
+    for k in range(0,Nsub):
+        u = t[k]
+        for i in range(0,m):
+            Po = f(u, v)
+            Pm = f(u + h2, v + h2*Po)
+            v = v + h*Pm
+            u = u + h
+        t[k+1] = a + (k+1)*H
+        y[:,k+1] = v
+    
+    return 2*m*Nsub, t, y
+# ==========================================================================
+def RungeKuttan(f, a, b, ya, n, Nsub, m): # Ord 4
+    H = (b - a)/Nsub ; h = H/m ; h2 = 0.5*h; h6 = h/6
+    t = np.zeros(Nsub+1)
+    y = np.zeros((n,Nsub+1))
+    t[0] = a ; y[:,0] = ya
+    v = ya
+    for k in range(0,Nsub):
+        u = t[k]
+        for i in range(0,m):
+            Po = f(u, v)
+            Pm1 = f(u + h2, v + h2*Po)
+            Pm2 = f(u + h2, v + h2*Pm1)
+            P = f(u + h, v + h*Pm2)
+            v = v + h6*(Po + 2.*(Pm1 + Pm2) + P)
+            u = u + h
+        t[k+1] = a + (k+1)*H
+        y[:,k+1] = v
+    
+    return 4*m*Nsub, t, y
+# ==========================================================================
 
 
 
