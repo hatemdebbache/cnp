@@ -28,16 +28,18 @@ def exo1():
     a = -1.
     b = 1.
     ya = y_exacte(a)
-    c, t, y = edo.Euler1(Ali, a, b, ya, 20, 2)
-    cc, tt, yy = edo.Heun1(Ali, a, b, ya, 20, 1)
-    ccc, ttt, yyy = edo.PointMilieu1(Ali, a, b, ya, 20, 1)
+    c, t, yE = edo.Euler1(Ali, a, b, ya, 20, 40)
+    c, t, yH = edo.Heun1(Ali, a, b, ya, 20, 2)
+    c, t, yP = edo.PointMilieu1(Ali, a, b, ya, 20, 2)
+    c, t, yR = edo.RungeKutta1(Ali, a, b, ya, 20, 1)
     
     graphe.FixeEchelle(-1., 1., 0., 1.1)
     graphe.TraceAxes()
-    graphe.TraceFonc(y_exacte, -1., 1.)
-    graphe.TracePoints(t, y, epaisseur=2.)
-    graphe.TracePoints(tt, yy, couleur='white', epaisseur=2.)
-    graphe.TracePoints(ttt, yyy, couleur='cyan', epaisseur=2., relie=True)
+    graphe.TraceFonc(y_exacte, -1., 1., epaisseur=3.)
+    graphe.TracePoints(t, yE, couleur='blue', epaisseur=5.)
+    # graphe.TracePoints(t, yH, couleur='white', epaisseur=4.)
+    # graphe.TracePoints(t, yP, couleur='cyan', epaisseur=4.)
+    graphe.TracePoints(t, yR, couleur='red', epaisseur=5.)
     plt.show()
 # ==============================================================
 def exo2():

@@ -526,7 +526,7 @@ def Pivotation(A, n, p, b=None):
     n : int 
         System's order (number of unkowns).
     p : int
-        Step number of Gauss-Jordan Eliminatioin.
+        Step number of Gauss-Jordan Elimination.
     
     Returns
     -------
