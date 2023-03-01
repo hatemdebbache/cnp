@@ -213,7 +213,7 @@ def Heun2(f, a, b, ya, za, Nsub, m): # Ord 2
     return 2*m*Nsub, t, y, z
 # ==========================================================================
 def RungeKutta2(f, a, b, ya, za, Nsub, m): # Ord 4
-    H = (b - a)/Nsub ; h = H/m ; h2 = 0.5*h; h6 = h/6
+    H = (b - a)/Nsub ; h = H/m ; h2 = 0.5*h; h6 = h/6.
     t = np.zeros(Nsub+1)
     y = np.zeros(Nsub+1)
     z = np.zeros(Nsub+1)
@@ -233,7 +233,7 @@ def RungeKutta2(f, a, b, ya, za, Nsub, m): # Ord 4
         y[k+1] = v
         z[k+1] = w
         
-    return 4*m*Nsub, t, y
+    return 4*m*Nsub, t, y, z
 # ==========================================================================
 
 """
@@ -242,7 +242,7 @@ def RungeKutta2(f, a, b, ya, za, Nsub, m): # Ord 4
 
 """
 # ==========================================================================
-def Eulern(f, a, b, ya, n, Nsub, m): # Ord 1
+def EulerN(f, a, b, ya, n, Nsub, m): # Ord 1
     # n : nb d'inconnues (ordre de l'edo)    
     # Nsub : int : graphique
     # m : int : nb de subdivision entre deux pas graph.
@@ -262,13 +262,13 @@ def Eulern(f, a, b, ya, n, Nsub, m): # Ord 1
     
     return m*Nsub, t, y
 # ==========================================================================
-def Heunn(f, a, b, ya, n, Nsub, m): # Ord 2
+def HeunN(f, a, b, ya, n, Nsub, m): # Ord 2
     # Nsub : int : graphique
     # m : int : nb de subdivision entre deux pas graph
     H = (b - a)/Nsub ; h = H/m ; h2 = 0.5*h
     t = np.zeros(Nsub+1)
     y = np.zeros((n,Nsub+1))
-    t[0] = a ; y[;,0] = ya
+    t[0] = a ; y[:,0] = ya
     v = ya
     for k in range(0,Nsub):
         u = t[k]
@@ -282,7 +282,7 @@ def Heunn(f, a, b, ya, n, Nsub, m): # Ord 2
     
     return 2*m*Nsub, t, y
 # ==========================================================================
-def PointMilieun(f, a, b, ya, n, Nsub, m): # Ord 2
+def PointMilieuN(f, a, b, ya, n, Nsub, m): # Ord 2
     # Nsub : int : graphique
     # m : int : nb de subdivision entre deux pas graph
     H = (b - a)/Nsub ; h = H/m ; h2 = 0.5*h
@@ -302,7 +302,7 @@ def PointMilieun(f, a, b, ya, n, Nsub, m): # Ord 2
     
     return 2*m*Nsub, t, y
 # ==========================================================================
-def RungeKuttan(f, a, b, ya, n, Nsub, m): # Ord 4
+def RungeKuttaN(f, a, b, ya, n, Nsub, m): # Ord 4
     H = (b - a)/Nsub ; h = H/m ; h2 = 0.5*h; h6 = h/6
     t = np.zeros(Nsub+1)
     y = np.zeros((n,Nsub+1))
@@ -373,7 +373,7 @@ def Euler_Mod(f, a, b, ya, Nsub, m):
 # ==========================================================================
 def Adams_Bashfort3(f, to, t1, t2, tn, yo, y1, y2):
     h = t1 - to ; h12 = h/12
-    t, y = [to, t1, t1], [yo, y1, y2]
+    t, y = [to, t1, t2], [yo, y1, y2]
     i = 2
     while(t[-1] < tn):
         k1 = f(t[i],y[i])
@@ -385,3 +385,21 @@ def Adams_Bashfort3(f, to, t1, t2, tn, yo, y1, y2):
     
     return 3*(i-2), np.array(t), np.array(y)
 # ==========================================================================
+def RK34(f, a, b, ya, Nsub, m):
+    H = (b - a)/Nsub ; h = H/m; h2 = 0.5*h; h34 = .75*h; h9 = h/9.
+    t = np.zeros(Nsub+1)
+    y = np.zeros(Nsub+1)
+    t[0] = a ; y[0] = ya
+    v = ya
+    for k in range(0,Nsub):
+        u = t[k]
+        for i in range(0,m):
+            Po = f(u, v)
+            Pm = f(u + h2, v + h2*Po)
+            P = f(u + h34, v + h34*Pm)
+            v = v + h9*(2*Po + 3*Pm + 4*P)
+            u = u + h
+        t[k+1] = a + (k+1)*H
+        y[k+1] = v
+        
+    return t, y
