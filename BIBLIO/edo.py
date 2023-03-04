@@ -43,7 +43,7 @@ def DFC2_GT(foncPQR, a, b, Va, Vb, Nsub, condA, condB): # Ord 2
         Un tableau de Nsub+1 éléments contenant les valeurs de y(t).
     Notes
     -----
-    L'erreur de cette méthode est de l'ordre 4.
+    L'erreur de cette méthode est de l'ordre 2.
     
     Voir aussi
     ----------
