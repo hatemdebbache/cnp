@@ -836,6 +836,63 @@ def RungeKuttaN(f, a, b, ya, n, Nsub, m):
 
 # METHODES For 1st Ord ODE. IMPLEMENTED BY HATEM
 # ==========================================================================
+def TroisQuart(f, a, b, ya, Nsub, m):
+    """
+    Calcule la solution numérique d'un problème de Cauchy d'ordre 1 
+    en utilisant la méthode de TroisQuart (nom non-officiel).
+    
+    Paramètres
+    ----------
+    f : fonction
+        La fonction f(t, y) dans l'équation différentielle y' = f(t, y).
+    a : float
+        Le début de l'intervalle de temps.
+    b : float
+        La fin de l'intervalle de temps.
+    ya : float
+        La valeur initiale de y à l'instant a.
+    Nsub : int
+        Le nombre de subdivisions de l'intervalle de temps.
+    m : int
+        Le nombre de subdivisions entre deux pas de temps pour les graphiques.
+    
+    Retours
+    -------
+    c : int
+        Le nombre total de points calculés.
+    t : ndarray
+        Les valeurs de t.
+    y : ndarray
+        Les valeurs de y(t).
+    
+    Notes
+    -----
+    L'erreur de cette méthode est de l'ordre xx.
+    
+    Voir aussi
+    ----------
+        - edo.Euler1
+        - edo.Heun1
+        - edo.PointMilieu1
+        - edo.RungeKutta1
+    """
+    H = (b - a)/Nsub ; h = H/m ; h3 = h/3. ; h34 = 0.75*h
+    t = np.zeros(Nsub+1)
+    y = np.zeros(Nsub+1)
+    t[0] = a ; y[0] = ya
+    v = ya
+    for k in range(0,Nsub):
+        u = t[k]
+        for i in range(0,m):
+            Po = f(u, v)
+            P = f(u + h34, v + h34*Po)
+            v = v + h3*(Po + 2*P)
+            u = u + h
+        t[k+1] = a + (k+1)*H
+        y[k+1] = v
+    
+    return 2*m*Nsub, t, y
+# ==========================================================================
 #
 #                           O(h²)
 #
@@ -854,12 +911,48 @@ def Adams_Bashfort2(f, to, t1, tn, yo, y1):
     return 2*(i-1), np.array(t), np.array(y)
 # ==========================================================================
 def Euler_Mod(f, a, b, ya, Nsub, m):
-    H = (b - a)/Nsub
-    h = H/m ; h2 = 0.5*h
+    """
+    Calcule la solution numérique d'un problème de Cauchy d'ordre 1 
+    en utilisant la méthode d'Euler modifiée.
     
+    Paramètres
+    ----------
+    f : fonction
+        La fonction f(t, y) dans l'équation différentielle y' = f(t, y).
+    a : float
+        Le début de l'intervalle de temps.
+    b : float
+        La fin de l'intervalle de temps.
+    ya : float
+        La valeur initiale de y à l'instant a.
+    Nsub : int
+        Le nombre de subdivisions de l'intervalle de temps.
+    m : int
+        Le nombre de subdivisions entre deux pas de temps pour les graphiques.
+    
+    Retours
+    -------
+    c : int
+        Le nombre total de points calculés.
+    t : ndarray
+        Les valeurs de t.
+    y : ndarray
+        Les valeurs de y(t).
+    
+    Notes
+    -----
+    L'erreur de cette méthode est de l'ordre 2.
+    
+    Voir aussi
+    ----------
+        - edo.Euler1
+        - edo.Heun1
+        - edo.PointMilieu1
+        - edo.RungeKutta1
+    """
+    H = (b - a)/Nsub ; h = H/m ; h2 = 0.5*h
     t = np.zeros(Nsub+1)
     y = np.zeros(Nsub+1)
-    
     t[0] = a ; y[0] = ya
     v = ya
     for k in range(0,Nsub):
