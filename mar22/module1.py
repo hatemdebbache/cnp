@@ -23,35 +23,19 @@ gOMEGA = 1.
 #
 # ==============================================================
 def main():
-    exo2()
-# ==============================================================
+    exo1()
+# =============================================================
 def exo1():
-    a = -1.
-    b = 1.
-    ya = y_exacte(a)
-    c, t, yE = edo.Euler1(Ali, a, b, ya, 20, 40)
-    c, t, yH = edo.Heun1(Ali, a, b, ya, 20, 2)
-    c, t, yP = edo.PointMilieu1(Ali, a, b, ya, 20, 2)
-    c, t, yR = edo.RungeKutta1(Ali, a, b, ya, 20, 1)
-    
-    graphe.FixeEchelle(-1., 1., 0., 1.1)
-    graphe.TraceAxes()
-    graphe.TraceFonc(y_exacte, -1., 1., epaisseur=3.)
-    graphe.TracePoints(t, yE, couleur='blue', epaisseur=5.)
-    # graphe.TracePoints(t, yH, couleur='white', epaisseur=4.)
-    # graphe.TracePoints(t, yP, couleur='cyan', epaisseur=4.)
-    graphe.TracePoints(t, yR, couleur='red', epaisseur=5.)
-    plt.show()
-# ==============================================================
-def exo1():
-    c, t, x, v = edo.RungeKutta2(ressort, 0., 4*pi, 1., 0., 100, 1000)
+    c, t, x, v = edo.RungeKutta2(ressort, 0., 4*pi, 1., 0., 600, 100)
     graphe.FixeEchelle(-1.1, 1.1, -1.1, 1.1)
     # graphe.FixeEchelle(0., 4*pi, -1., 1.)
     graphe.TraceAxes()
     # graphe.TracePoints(t, x, couleur='green', relie=True, epaisseur=3.)
     # graphe.TracePoints(t, v, couleur='pink', relie=True, epaisseur=3.)
-    # graphe.TraceFonc(exacte, 0., pi, couleur = 'red', epaisseur=2.)
+    # graphe.TraceFonc(exacte, 0., 4*pi, couleur = 'red', epaisseur=2., npts=1000)
     graphe.TracePoints(x, v, couleur='cyan', epaisseur=5.)
+    c, t, x, v = edo.RungeKutta2(ressort, 0., pi, 0.5, 0.7, 600, 100)
+    graphe.TracePoints(x, v, couleur='red', epaisseur=5.)
     plt.show()
 # ==============================================================
 def exo3():
