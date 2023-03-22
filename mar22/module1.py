@@ -15,7 +15,7 @@ import graphe
 import edo
 # ----- Global Variables/Constants
 gBETA = 0.1433 # PERSONAL CODE
-gALPHA = 0.
+gALPHA = 2.9
 gOMEGA = 1.
 # ==============================================================
 #
@@ -23,19 +23,46 @@ gOMEGA = 1.
 #
 # ==============================================================
 def main():
-    exo1()
+    exo2()
 # =============================================================
 def exo1():
-    c, t, x, v = edo.RungeKutta2(ressort, 0., 4*pi, 1., 0., 600, 100)
-    graphe.FixeEchelle(-1.1, 1.1, -1.1, 1.1)
-    # graphe.FixeEchelle(0., 4*pi, -1., 1.)
+    graphe.FixeEchelle(-10., 10., -10., 10.)
     graphe.TraceAxes()
-    # graphe.TracePoints(t, x, couleur='green', relie=True, epaisseur=3.)
-    # graphe.TracePoints(t, v, couleur='pink', relie=True, epaisseur=3.)
-    # graphe.TraceFonc(exacte, 0., 4*pi, couleur = 'red', epaisseur=2., npts=1000)
-    graphe.TracePoints(x, v, couleur='cyan', epaisseur=5.)
-    c, t, x, v = edo.RungeKutta2(ressort, 0., pi, 0.5, 0.7, 600, 100)
-    graphe.TracePoints(x, v, couleur='red', epaisseur=5.)
+    c, t, y, z = edo.RungeKutta2(samia, 0., 2., -0.5, 0.3, 1000, 100)
+    graphe.TracePoints(y, z)
+    c, t, y, z = edo.RungeKutta2(samia, 2., 0., -0.5, 0.3, 1000, 100)
+    graphe.TracePoints(y, z)
+    
+    c, t, y, z = edo.RungeKutta2(samia, 0., 10., 0.2, 0.2, 1000, 100)
+    graphe.TracePoints(y, z, couleur='blue')
+    c, t, y, z = edo.RungeKutta2(samia, 10., 0., 0.2, 0.2, 1000, 100)
+    graphe.TracePoints(y, z, couleur='blue')
+    
+    c, t, y, z = edo.RungeKutta2(samia, 0., 2., -0.1, -0.1, 1000, 100)
+    graphe.TracePoints(y, z, couleur='green')
+    c, t, y, z = edo.RungeKutta2(samia, 2., 0., -0.1, -0.1, 1000, 100)
+    graphe.TracePoints(y, z, couleur='green')
+    
+    plt.show()
+# ==============================================================
+def exo2():
+    graphe.FixeEchelle(-10., 10., -10., 10.)
+    graphe.TraceAxes()
+    c, t, y, z = edo.RungeKutta2(samia2, 0., 50., -0.5, 0.3, 1000, 100)
+    graphe.TracePoints(y, z)
+    c, t, y, z = edo.RungeKutta2(samia2, 50., 0., -0.5, 0.3, 1000, 100)
+    graphe.TracePoints(y, z)
+    
+    c, t, y, z = edo.RungeKutta2(samia2, 0., 50., 0.5, 0.3, 1000, 100)
+    graphe.TracePoints(y, z, couleur='blue')
+    c, t, y, z = edo.RungeKutta2(samia2, 50., 0., 0.5, 0.3, 1000, 100)
+    graphe.TracePoints(y, z, couleur='blue')
+    
+    c, t, y, z = edo.RungeKutta2(samia2, 0., 50., -1., -2, 1000, 100)
+    graphe.TracePoints(y, z, couleur='green')
+    c, t, y, z = edo.RungeKutta2(samia2, 50., 0., -1., -2, 1000, 100)
+    graphe.TracePoints(y, z, couleur='green')
+    
     plt.show()
 # ==============================================================
 def exo3():
@@ -44,20 +71,15 @@ def exo3():
 def exo4():
     pass
 # ==============================================================
-def exo5():
-    pass
-# ==============================================================
 #
 #                       ADDITIONAL FUNCTIONS
 #
 # ==============================================================
-def ressort(t, x, v):
-    x_point = v
-    v_point = -gALPHA*v - gOMEGA*gOMEGA*x
-    return x_point, v_point
+def samia(t, y, z):
+    return 3.*y + 4.*z, 5.*y + 2.*z
 # ==============================================================
-def exacte(t):
-    return cos(gOMEGA*t)
+def samia2(t, y, z):
+    return -y + z, (-2. + gALPHA)*y - z
 # ==============================================================
 #
 #                       EXECUTION BLOCK
