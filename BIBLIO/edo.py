@@ -19,15 +19,15 @@ def DFC2_GT(foncPQR, a, b, Va, Vb, Nsub, condA, condB): # Ord 2
     Paramètres
     ----------
     foncPQR : function
-        Une fonction qui prend un argument t et renvoie les valeurs de P, Q et R pour une EDO du second ordre de la forme y'' = P*y' + Q*y + R.
+        Une fonction qui prend un argument x et renvoie les valeurs de P, Q et R pour une EDO du second ordre de la forme y'' = P*y' + Q*y + R.
     a : float
         La borne inférieure de l'intervalle sur lequel résoudre l'EDO.
     b : float
         La borne supérieure de l'intervalle sur lequel résoudre l'EDO.
     Va : float
-        La condition limite à gauche (y(a)).
+        La condition limite à gauche (y(a) / y'(a)).
     Vb : float
-        La condition limite à droite (y(b)).
+        La condition limite à droite (y(b) / y'(b)).
     Nsub : int
         Le nombre de subdivisions de l'intervalle [a, b].
     condA : bool
@@ -38,9 +38,9 @@ def DFC2_GT(foncPQR, a, b, Va, Vb, Nsub, condA, condB): # Ord 2
     Retourne
     -------
     x : ndarray
-        Un tableau de Nsub+1 éléments contenant les valeurs de t.
+        Un tableau de Nsub+1 éléments contenant les valeurs de x.
     y : ndarray
-        Un tableau de Nsub+1 éléments contenant les valeurs de y(t).
+        Un tableau de Nsub+1 éléments contenant les valeurs de y(x).
     Notes
     -----
     L'erreur de cette méthode est de l'ordre 2.
@@ -111,15 +111,15 @@ def DFC4_GT(foncPQR, a, b, Va, Vb, Nsub, condA, condB):
     Paramètres
     ----------
     foncPQR : function
-        Une fonction qui prend un argument t et renvoie les valeurs de P, Q et R pour une EDO du second ordre de la forme y'' = P*y' + Q*y + R.
+        Une fonction qui prend un argument x et renvoie les valeurs de P, Q et R pour une EDO du second ordre de la forme y'' = P*y' + Q*y + R.
     a : float
         La borne inférieure de l'intervalle sur lequel résoudre l'EDO.
     b : float
         La borne supérieure de l'intervalle sur lequel résoudre l'EDO.
     Va : float
-        La condition limite à gauche (y(a)).
+        La condition limite à gauche (y(a) / y'(a)).
     Vb : float
-        La condition limite à droite (y(b)).
+        La condition limite à droite (y(b) / y'(b)).
     Nsub : int
         Le nombre de subdivisions de l'intervalle [a, b].
     condA : bool
@@ -130,9 +130,9 @@ def DFC4_GT(foncPQR, a, b, Va, Vb, Nsub, condA, condB):
     Retourne
     -------
     x : ndarray
-        Un tableau de Nsub+1 éléments contenant les valeurs de t.
+        Un tableau de Nsub+1 éléments contenant les valeurs de x.
     y : ndarray
-        Un tableau de Nsub+1 éléments contenant les valeurs de y(t).
+        Un tableau de Nsub+1 éléments contenant les valeurs de y(x).
     
     Notes
     -----
@@ -389,7 +389,7 @@ def RungeKutta1(f, a, b, ya, Nsub, m): # Ord 4
 """
 
 # ==========================================================================
-def Euler2(f, a, b, ya, za, Nsub, m): # Ord 1
+def Euler2(f, a, b, ya, za, Nsub, m):
     """
     Solve the Cauchy problem for a system of two first-order ODEs using the Euler method.
 
@@ -443,7 +443,7 @@ def Euler2(f, a, b, ya, za, Nsub, m): # Ord 1
         z[k+1] = w
     return m*Nsub, t, y, z
 # ==========================================================================
-def Heun2(f, a, b, ya, za, Nsub, m): # Ord 2
+def Heun2(f, a, b, ya, za, Nsub, m): 
     """
     Solve the Cauchy problem for a system of two first-order ODEs using the Heun method.
 
