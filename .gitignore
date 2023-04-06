@@ -1,5 +1,6 @@
 # Compressed files used for archiving
 *.zip
+*.pickle
 # Personal examples and testing modules
 Exemple Flexion/
 TP/
@@ -10,6 +11,8 @@ test*
 lehtihet bib vb/
 # Build & Temp files
 <<<<<<< HEAD
+*.npy
+*.spydata
 *.pyc
 .spyproject/
 __pycache__/
