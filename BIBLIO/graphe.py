@@ -18,7 +18,7 @@ def FixeEchelle(xmin, xmax, ymin, ymax):
     plt.ylim(ymin, ymax)
 
 # ==============================================================
-def TraceAxes(xo = 0.0, yo = 0.0, coulaxes='black', coulgr ='grey'):
+def TraceAxes(xo = 0.0, yo = 0.0, coulaxes='white', coulgr ='gray'):
     plt.grid(color = coulgr, linewidth = 0.5)
     plt.axvline(xo, color = coulaxes, linewidth = 1.0)
     plt.axhline(yo, color = coulaxes, linewidth = 1.0)
