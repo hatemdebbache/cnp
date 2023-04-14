@@ -2,7 +2,6 @@
 *.zip
 *.pickle
 # Personal examples and testing modules
-test*
 Private/
 # Redundant files
 lehtihet bib vb/
