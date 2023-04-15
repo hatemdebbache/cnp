@@ -3,6 +3,7 @@
     
     Des fonctions élémentaires
 """
+
 import numpy as np
 from math import sqrt, tanh
 # ==============================================================
@@ -68,6 +69,27 @@ def intersection_cercle(c, r, p1, p2):
         return 1 + s
 # ==============================================================
 def ESD(b,c):
+    """
+    Calcule les solutions d'une équation du second degrée x²+bx+c = 0.
+
+    Parameters
+    ----------
+    b, c : float.
+        Coefficient de l'équation.
+        
+    Returns
+    -------
+    s : int
+        Le signe du déterminant == type de solution:
+            * (-1) si les solution sont complexe (conjugées) => x = Re(z) ; y = +Im(z).
+            * (0)  si la solution est double => x = y.
+            * (1)  si les solution sont réelles => x != y. 
+    x : float.
+        Première solution.
+    y : float.
+        Deuxième solution.
+
+    """
     # Calcule du determinant
     det = b*b - 4*c
     # Ctrl des cas possibles
@@ -135,6 +157,21 @@ def Poly_Lagrange(X, Y, x):
     return y
 # ==============================================================
 def Poly_Legendre(n, x):
+    """
+        Calculate L(x) the Legendre polynomial of degree n at point x.
+
+    Parameters
+    ----------
+    n : int
+        Polynomial's degree.
+    x : float
+        The position where to evaluate Legendre polynomial.
+
+    Returns
+    -------
+    L(x) : float
+
+    """
     if (n == 0):
         return 1
     if (n == 1):
