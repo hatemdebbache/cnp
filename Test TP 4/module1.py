@@ -24,10 +24,10 @@ cs = 9         # Numbre of most significant digits to be printed
 #
 # ==============================================================
 def main():
-    exo1()
-    exo2()
+    # exo1()
+    # exo2()
     exo3()
-    exo4()
+    # exo4()
     # exo5()
 # ==============================================================
 def exo1():
@@ -129,7 +129,7 @@ def exo3():
     yo = 5. ; zo = 1.
     a = 0. ; b = 100.
     m = 1 ; Nsub = int((b - a)/dt)
-
+    
     # Eq Diff
     # def Lotka(t, y, z):
     #     yp = a*y*(1 - z/b)

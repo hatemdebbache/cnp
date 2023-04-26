@@ -81,3 +81,27 @@ def TracePortrait(f, a, b, PtCs, npts, h, r=0.1, ntraj=20, methode = 'RK', relie
             else:
                 plt.scatter(y,z, color = couleur, lw = epaisseur)
 # ==============================================================
+def TraceFlux(f, ymin, ymax, zmin, zmax, step):
+    """
+        Draw the flow field of autonomous ODE system.
+
+    Parameters
+    ----------
+    f : TYPE
+        DESCRIPTION.
+    ymin : TYPE
+        DESCRIPTION.
+    ymax : TYPE
+        DESCRIPTION.
+    zmin : TYPE
+        DESCRIPTION.
+    zmax : TYPE
+        DESCRIPTION.
+    step : TYPE
+        DESCRIPTION.
+
+    Returns
+    -------
+    None.
+
+    """
