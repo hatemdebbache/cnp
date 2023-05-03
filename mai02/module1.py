@@ -21,7 +21,7 @@ gBETA = 0.1433 # PERSONAL CODE
 #
 # ==============================================================
 def main():
-    exo1()
+    exo4()
 # ==============================================================
 def exo1():
     U = np.zeros((11,11))
@@ -77,13 +77,117 @@ def exo1():
     print(U)
 # ==============================================================
 def exo2():
-    pass
+    U = np.zeros((11,11))
+    a = 9000 ; b = 3000 ; c = 2000 ; d = 1000
+    MatVec.remplir_matrice(0, 0, 1, 9, U, a)
+    MatVec.remplir_matrice(10, 10, 1, 9, U, c)
+    MatVec.remplir_matrice(1, 9, 0, 0, U, b)
+    MatVec.remplir_matrice(1, 9, 10, 10, U, d)
+    MatVec.remplir_matrice(1, 9, 1, 9, U, 5500)
+    np.set_printoptions(precision=0)
+    # print(U)
+    
+    R = 1.2
+    kmax = 250
+    e = 0.001
+    R2 = R*R
+    c = 0.5/(R2 + 1)
+    k = 0
+    while (True):
+        k = k + 1
+        if (k > kmax):
+            k = -1
+            break
+        
+        propre = True
+        for i in range(1,9+1):
+            for j in range(1,9+1):        
+                anc = U[i,j]
+                U[i,j] = c*(U[i,j+1] + U[i,j-1] + R2*(U[i-1,j] + U[i+1,j]))
+                if (abs(anc - U[i,j]) > e):
+                    propre = False
+
+        if (propre == True):
+            break
+    
+    print(k)
+    print(U)
 # ==============================================================
 def exo3():
-    pass
+    U = np.zeros((6,6))
+    a = 9000 ; b = 3000 ; c = 2000 ; d = 1000
+    MatVec.remplir_matrice(0, 0, 1, 4, U, a)
+    MatVec.remplir_matrice(5, 5, 1, 4, U, c)
+    MatVec.remplir_matrice(1, 4, 0, 0, U, b)
+    MatVec.remplir_matrice(1, 4, 5, 5, U, d)
+    MatVec.remplir_matrice(1, 4, 1, 4, U, 5500)
+    np.set_printoptions(precision=0)
+    # print(U)
+    
+    R = 1.2
+    kmax = 250
+    e = 0.01
+    R2 = R*R
+    c = 0.5/(R2 + 1)
+    k = 0
+    while (True):
+        k = k + 1
+        if (k > kmax):
+            k = -1
+            break
+        
+        propre = True
+        for i in range(1,4+1):
+            for j in range(1,4+1):        
+                anc = U[i,j]
+                U[i,j] = c*(U[i,j+1] + U[i,j-1] + R2*(U[i-1,j] + U[i+1,j]))
+                if (abs(anc - U[i,j]) > e):
+                    propre = False
+
+        if (propre == True):
+            break
+    
+    print(k)
+    print(U)
 # ==============================================================
 def exo4():
-    pass
+    U = np.zeros((11,11))
+    a = 9000 ; b = 3000 ; c = 2000 ; d = 1000
+    MatVec.remplir_matrice(0, 0, 1, 9, U, a)
+    MatVec.remplir_matrice(10, 10, 1, 9, U, c)
+    MatVec.remplir_matrice(1, 9, 0, 0, U, b)
+    MatVec.remplir_matrice(1, 9, 10, 10, U, d)
+    MatVec.remplir_matrice(1, 9, 1, 9, U, 5500)
+    np.set_printoptions(precision=0)
+    # print(U)
+    
+    R = 1.2
+    kmax = 250
+    e = 0.001
+    R2 = R*R
+    c = 0.5/(R2 + 1)
+    w = 1.55
+    k = 0
+    while (True):
+        k = k + 1
+        if (k > kmax):
+            k = -1
+            break
+        
+        propre = True
+        for i in range(1,9+1):
+            for j in range(1,9+1):        
+                anc = U[i,j]
+                nouv = c*(U[i,j+1] + U[i,j-1] + R2*(U[i-1,j] + U[i+1,j]))
+                U[i,j] = anc + w*(nouv - anc)
+                if (abs(anc - U[i,j]) > e):
+                    propre = False
+
+        if (propre == True):
+            break
+    
+    print(k)
+    print(U)
 # ==============================================================
 def exo5():
     pass
