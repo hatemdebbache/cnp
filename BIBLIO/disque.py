@@ -4,7 +4,7 @@ Created on Tue Oct 20 13:14:56 2020
 
 @author: user
 """
-
+import ctrl
 import numpy as np
 # ==============================================================
 def LireVec2(nom_fichier):
@@ -43,7 +43,6 @@ def LireMat(nom_fichier):
     return N, M, A
 # ==============================================================
 def LireSys(nom_fichier):
-    
     with open(nom_fichier, 'r') as f:
         header = f.readline().split()
         N, M = int(header[0]), int(header[1])
@@ -55,4 +54,33 @@ def LireSys(nom_fichier):
     
     return N, M, A, b
 # ==============================================================
-
+def EcrireMat(M, nom_fichier, cs): 
+    """
+    Ecrire une matrice M dans un fichier text.
+    
+    Parameters
+    ----------
+    M : ndarray
+        La matrice à écrire.
+    nom_fichier : str
+        Le nom de fichier de sortie, le chemin du fichier peut être inclut.
+        (N'oblier pas d'ajouter .txt à la fin du nom)
+    cs : int
+        Le nombre de chiffres significatifs.
+    
+    Notes
+    -----
+    Be careful with the truncation effect when assigning 'cs'
+    """
+    try:
+        n,m = M.shape
+    except:
+        ctrl.erreur('EcrireMat', 'M n\'est pas une matrice (de type ndarray)')
+    
+    with open(nom_fichier, 'w') as sortie:
+        sortie.write(str(n) + ' ' + str(m))
+        for i in range(n):
+            sortie.write('\n')
+            for j in range(m):
+                sortie.write(str(format(M[i,j], f'.{cs}g')) + ' ')
+# ==============================================================
