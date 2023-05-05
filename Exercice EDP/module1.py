@@ -61,11 +61,16 @@ def exo1():
         # 1er noyau
         for i in range(1,9+1):
             for j in range(1,13+1):
+                # Le point (5,7) doit rester inchange
+                if (i==5 and j ==7):
+                    continue
+
                 anc = u[i,j]
                 nouv = c*(R14*(u[i-1,j-1] - u[i-1,j+1] - u[i+1,j-1] + u[i+1,j+1]) + R2*(u[i-1,j] + u[i+1,j]) + u[i,j-1] + u[i,j+1])
                 u[i,j] = anc + w*(nouv - anc)
                 if (abs(anc - u[i,j]) > e):
                     done = False
+                
         
         # 2eme noyau
         for i in range(10,23+1):
@@ -84,7 +89,7 @@ def exo1():
     print(f'U(5,6) = {u[5,6]:.{cs}g}\tU(9,14) = {u[9,14]:.{cs}g}\tU(18,4) = {u[18,4]:.{cs}g}')
     print(f'Cout = {k}')
     
-    # disque.EcrireMat(u, 'zaki.txt', 4)
+    disque.EcrireMat(u, 'zaki.txt', 4)
 # ==============================================================
 def exo2():
     pass
