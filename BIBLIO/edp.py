@@ -5,6 +5,7 @@
         
 """
 import numpy as np
+import matplotlib.pyplot as plt
 
 # ============================================================================
 def get_kernel(eq, dx, dy):
@@ -78,3 +79,32 @@ def get_kernel(eq, dx, dy):
     
     return kernel
 # ============================================================================
+def heatmap(U):
+    """
+    Show the heatmap of an array
+
+    Parameters
+    ----------
+    U : ndarray
+        The array to be represented.
+    """
+    x = np.arange(U.shape[1]) ; y = np.arange(U.shape[0])
+    
+    plt.clf()
+    plt.xticks(x) ; plt.yticks(y)
+
+    plt.rcParams.update({'axes.grid' : True,
+                         'grid.color' : 'white', 
+                         'grid.linewidth' : 2.,
+                         
+                         'xtick.labeltop' : True,   
+                         'xtick.labelbottom' : False,
+                          
+                         'ytick.labelleft' : True,   
+                         'ytick.labelright' : False,   
+                         })
+    
+    plt.imshow(U,cmap='hot')
+    plt.colorbar()
+    
+    plt.show()
