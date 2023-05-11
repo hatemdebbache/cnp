@@ -65,7 +65,7 @@ def exo1():
             for i in range(1,6+1):
                 # Premiere colonne
                 anc = u[i,0]
-                nouv = c*(4*u[i,1] + (R2-1.5/i)*u[i-1,0] + (R2+1.5/i)*u[i+1,0])
+                nouv = c*(4*u[i,1] + R2*(1-1.5/i)*u[i-1,0] + R2*(1+1.5/i)*u[i+1,0])
                 u[i,0] = anc + w*(nouv-anc)
                 if (abs(anc - u[i,0]) > e):
                     done = False
@@ -74,7 +74,7 @@ def exo1():
                     if (i==5 and j==7): 
                         continue  # Ne modifier pas P
                     anc = u[i,j]
-                    nouv = c*(2*(u[i,j-1] + u[i,j+1]) + (R2-1.5/i)*u[i-1,j] + (R2+1.5/i)*u[i+1,j])
+                    nouv = c*(2*(u[i,j-1] + u[i,j+1]) + R2*(1-1.5/i)*u[i-1,j] + R2*(1+1.5/i)*u[i+1,j])
                     u[i,j] = anc + w*(nouv-anc)
                     if (abs(anc - u[i,j]) > e):
                         done = False
@@ -82,7 +82,7 @@ def exo1():
             for i in range(7,9+1):
                 for j in range(5,9+1):
                     anc = u[i,j]
-                    nouv = c*(2*(u[i,j-1] + u[i,j+1]) + (R2-1.5/i)*u[i-1,j] + (R2+1.5/i)*u[i+1,j])
+                    nouv = c*(2*(u[i,j-1] + u[i,j+1]) + R2*(1-1.5/i)*u[i-1,j] + R2*(1+1.5/i)*u[i+1,j])
                     u[i,j] = anc + w*(nouv-anc)
                     if (abs(anc - u[i,j]) > e):
                         done = False
