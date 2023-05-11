@@ -169,7 +169,7 @@ def EQM(X, Y, f=None, Y_approch=None, kmin = 0, kmax = None):
             Y_approch[i-kmin] = f(X[i])
     
     eqm = Y[kmin:kmax+1]-Y_approch
-    eqm = np.sqrt(sum(eqm*eqm)/(kmax+1-kmin))
-    
+    # eqm = np.sqrt(sum(eqm*eqm)/(kmax+1-kmin))
+    eqm = sum(eqm*eqm)/(kmax+1-kmin)
     return eqm
 # =============================================================================

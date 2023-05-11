@@ -12,6 +12,8 @@ from math import exp, pi, cos, sin, log
 # ----- User-Defined-Modules Importing
 sys.path.insert(0, "./../BIBLIO/")
 import MatVec
+import edo
+import graphe
 
 # ----- Global Variables/Constants
 gBETA = 0.1433 # PERSONAL CODE
@@ -21,7 +23,7 @@ gBETA = 0.1433 # PERSONAL CODE
 #
 # ==============================================================
 def main():
-    exo1()
+    exo2()
 # ==============================================================
 def exo1():
     U = np.zeros((4,4))
@@ -65,7 +67,22 @@ def exo1():
     print(U)
 # ==============================================================
 def exo2():
-    pass
+    Nsub = 1000 ; m = 10
+    a = 0. ; b = 5.
+    ya = 0.1 ; za = 0.1
+    
+    graphe.FixeEchelle(-5., 5., -5., 5.)
+    graphe.TraceAxes()
+    ntraj = 20 ; r = 0.01
+    theta = np.linspace(0,2*np.pi,num=ntraj)
+
+    for p in [(0,0), (1,0), (-1,-2)]:
+        for k in theta:
+            ya = p[0] + cos(k) ; za = p[1] + sin(k)
+            c, t, y, z = edo.RungeKutta2(samia, a, b, ya, za, Nsub, m)
+            graphe.TracePoints(y, z)
+        
+    plt.show()
 # ==============================================================
 def exo3():
     pass
@@ -80,8 +97,8 @@ def exo5():
 #                       ADDITIONAL FUNCTIONS
 #
 # ==============================================================
-def f(x):
-    pass
+def samia(t, y,z):
+    return z*(1-y*y), y*(1-y+z)
 # ==============================================================
 def g(x):
     pass
